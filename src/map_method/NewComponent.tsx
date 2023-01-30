@@ -26,6 +26,7 @@ export const NewComponent_1 = (props: NewComponent_1Type) => {
     return (
         <table>
             <tr>
+                <th>N</th>
                 <th>manufacturer</th>
                 <th>model</th>
             </tr>
@@ -33,7 +34,8 @@ export const NewComponent_1 = (props: NewComponent_1Type) => {
                 debugger
                 return (
                     <tr key={index}>
-                        <td>{index+1} {carObjectFromTopCarsArray.manufacturer}</td>
+                        <td>{index+1} </td>
+                        <td>{carObjectFromTopCarsArray.manufacturer}</td>
                         <td>{carObjectFromTopCarsArray.model}</td>
                     </tr>
                 )
