@@ -1,67 +1,56 @@
 import React, {useState} from 'react';
 import './App.css';
-import Button from "./monday_super-button/Button";
-import {NewComponent_1} from "./map_method/NewComponent";
 
-export type StudentType = {
-    id: number
-    name: string
-    age: number
-}
-
-export type topCarType = {
-    manufacturer: string
-    model: string
-}
-
+type FilterType = 'all' | 'ruble' | 'dollar'
 
 function App() {
 
-    // const students: Array<StudentType> = [
-    //     {id: 1, name: "James", age: 8},
-    //     {id: 2, name: "Robert", age: 18},
-    //     {id: 3, name: "John", age: 28},
-    //     {id: 4, name: "Michael", age: 38},
-    //     {id: 5, name: "William", age: 48},
-    //     {id: 6, name: "David", age: 58},
-    //     {id: 7, name: "Richard", age: 68},
-    //     {id: 8, name: "Joseph", age: 78},
-    //     {id: 9, name: "Thomas", age: 88},
-    //     {id: 10, name: "Charles", age: 98},
-    //     {id: 11, name: "Christopher", age: 100},
-    // ]
+    const [money, setMoney] = useState([
+        {banknote: 'dollar', nominal: 100, number: ' a1234567890'},
+        {banknote: 'dollar', nominal: 50, number: ' z1234567890'},
+        {banknote: 'ruble', nominal: 100, number: ' w1234567890'},
+        {banknote: 'dollar', nominal: 100, number: ' e1234567890'},
+        {banknote: 'dollar', nominal: 50, number: ' c1234567890'},
+        {banknote: 'ruble', nominal: 100, number: ' r1234567890'},
+        {banknote: 'dollar', nominal: 50, number: ' x1234567890'},
+        {banknote: 'ruble', nominal: 50, number: ' v1234567890'},
+    ])
 
-    const topCars: Array<topCarType> = [
-        {manufacturer: "BMW", model: 'm5cs'},
-        {manufacturer: "Mercedes", model: 'e63s'},
-        {manufacturer: "Audi", model: 'rs6'}
-    ]
+    const [filter, setFilter] = useState<FilterType>("all")
+
+    let currentMoney = money;
+    if (filter === 'ruble') {
+        currentMoney = money.filter((f) => f.banknote === 'ruble');
+    }
+    if (filter === 'dollar') {
+        currentMoney = money.filter((f) => f.banknote === 'dollar');
+    }
 
 
-    // const func1 = (name:string, age: number) => {
-    //   console.log(name, age)
-    // }
-
-    // let [a, setA] = useState(0)
-    //
-    // const onClickHandler_1 = () => {
-    //     setA(++a)
-    //     console.log(a)
-    // }
-    //
-    //   const onClickHandler_2 = () => {
-    //       setA(0)
-    //       console.log(a)
-    //   }
+    const onClickFilterHandler = (nameButton: FilterType) => {
+      setFilter(nameButton)
+    }
 
     return (
-        <div className="App">
-            {/*<Button name={"Roman"} callBack={() => func1("Roman", 37)}/>*/}
-            {/*<button onClick={onClickHandler_1}>{a}</button>*/}
-            {/*<button onClick={onClickHandler_2}>{"reset"}</button>*/}
-            {/*  <NewComponent students={students}/>*/}
-            <NewComponent_1 topCars={topCars} />
-        </div>
+        <>
+            <ul>
+                {currentMoney.map((objectFromMoneyArray, index) => {
+                    return (
+                        <li key={index}>
+                            <span> {objectFromMoneyArray.banknote}</span>
+                            <span> {objectFromMoneyArray.nominal}</span>
+                            <span> {objectFromMoneyArray.number}</span>
+                        </li>
+                    )
+                })}
+            </ul>
+            <div style={{marginLeft: "35px"}}>
+                <button onClick={() => onClickFilterHandler('all')}>all</button>
+                <button onClick={() => onClickFilterHandler('ruble')}>ruble</button>
+                <button onClick={() => onClickFilterHandler('dollar')}>dollar</button>
+            </div>
+
+        </>
     );
 }
 
