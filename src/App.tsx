@@ -1,51 +1,40 @@
 import React, {useState} from 'react';
-import './App.css';
-import NewComponent from "./NewComponent";
+import {FullInput} from "./monday_input/components/FullInput";
 
-export type FilterType = 'all' | 'ruble' | 'dollar'
-export type MoneyType = {
-    banknote: string
-    nominal: number
-    number: string
+export type MessageType = {
+    message: string
 }
 
+const App = () => {
 
-function App() {
+    let [message, setMessage] = useState<Array<MessageType>>([
+            {message: 'message1' },
+            {message: 'message2'},
+            {message: 'message3'}
+        ]
+    )
 
-    const [money, setMoney] = useState<Array<MoneyType>>([
-        {banknote: 'dollar', nominal: 100, number: ' a1234567890'},
-        {banknote: 'dollar', nominal: 50, number: ' z1234567890'},
-        {banknote: 'ruble', nominal: 100, number: ' w1234567890'},
-        {banknote: 'dollar', nominal: 100, number: ' e1234567890'},
-        {banknote: 'dollar', nominal: 50, number: ' c1234567890'},
-        {banknote: 'ruble', nominal: 100, number: ' r1234567890'},
-        {banknote: 'dollar', nominal: 50, number: ' x1234567890'},
-        {banknote: 'ruble', nominal: 50, number: ' v1234567890'},
-    ])
-
-    const [filter, setFilter] = useState<FilterType>("all")
-
-    let currentMoney = money;
-    if (filter === 'ruble') {
-        currentMoney = money.filter((f) => f.banknote === 'ruble');
-    }
-    if (filter === 'dollar') {
-        currentMoney = money.filter((f) => f.banknote === 'dollar');
-    }
-
-
-    const onClickFilterHandler = (nameButton: FilterType) => {
-        setFilter(nameButton)
+    const addMessage = (title: string) => {
+        let newMessage: MessageType = {message: title}
+        setMessage([newMessage, ...message])
     }
 
     return (
-        <>
-            <NewComponent
-                onClickFilterHandler={onClickFilterHandler}
-                currentMoney={currentMoney}
+        <div className={'App'}>
+            <FullInput
+                addMessage={addMessage}
             />
-        </>
+            {/*<div>*/}
+            {/*    <input/>*/}
+            {/*    <button>+</button>*/}
+            {/*</div>*/}
+            {message.map((el, index) => {
+                return (
+                    <div key={index}>{el.message}</div>
+                )
+            })}
+        </div>
     );
-}
+};
 
 export default App;
